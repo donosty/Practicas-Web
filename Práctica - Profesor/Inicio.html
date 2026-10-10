@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html ng-app ="panda">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Práctica - Profesor</title>
+
+	<!--Incluir Bootstrap -->
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
+	<!--Incluir Angular Js -->
+
+	<script src="Lib/angular.min.js"></script>
+	<script src="./js/app.js"></script>
+	
+
+</head>
+	<body class="bg-light">
+		<div class="container py-5" ng-controller="pandaCtrl as p">
+
+			<header class="text-center mb-5">
+				<h1 class="display-4 font-weight-bold text-primary">Mis animales</h1>
+				<p class="lead text-muted mb-0">Conoce sus características</p>
+			</header>
+
+			<div class="row align-items-center mb-4">
+				
+				<div class="col-md-4 mb-3 mb-md-0">
+					<section class="card border-0 shadow-sm h-100">
+						<div class="card-body text-center">
+							<img ng-src="{{panda.avatar}}" class="img-fluid rounded-circle border border-primary" alt="{{p.panda.nombre}}" width="150" height="150">
+							<h2 class="h4 mt-3 mb-0">{{panda.nombre}}</h2>
+						</div>
+					</section>
+				</div>
+				<div class="col-md-8">
+					<section class="card border-0 shadow-sm">
+						<div class="card-body">
+							<h3 class="h5 text-primary">Información</h3>
+							<p class="mb-2"><strong>Dieta:</strong> {{panda.caracteristicas.dieta}}</p>
+							<p class="mb-2"><strong>Peso:</strong> {{panda.caracteristicas.peso}}</p>
+							<p class="mb-0"><strong>Edad:</strong> {{panda.edad}} años</p>
+						</div>
+					</section>
+
+					<button class="btn btn-primary mt-2" ng-click="EditarPanda()">Editar</button>
+
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col-md-8">
+					<section class="card border-0 shadow-sm">
+						<div class="card-body">
+							Nombre
+							<input type="text" class="form-control" ng-model="Editando.nombre" >
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-8">
+					<section class="card border-0 shadow-sm">
+						<div class="card-body">
+							Dieta
+							<input type="text" class="form-control" ng-model="Editando.caracteristicas.dieta" >
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-8">
+					<section class="card border-0 shadow-sm">
+						<div class="card-body">
+							Peso
+							<input type="text" class="form-control" ng-model="Editando.caracteristicas.peso" >
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-8">
+					<section class="card border-0 shadow-sm">
+						<div class="card-body">
+							Edad
+							<input type="text" class="form-control" ng-model="Editando.edad" >
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<button class="btn btn-success mt-2" ng-click="guardarPanda()">Guardar</button>
+			<button class="btn btn-danger mt-2" ng-click="cancelarPanda()">Cancelar</button>
+			<p class="text-info mt-2" ng-if="mensajePanda">{{mensajePanda}}</p>
+
+			<div class="row align-items-center mb-4">
+				<div class="col-md-4 mb-3 mb-md-0">
+					<section class="card border-0 shadow-sm h-100">
+						<div class="card-body text-center">
+							<img ng-src="{{p.oso.avatar}}" class="img-fluid rounded-circle border border-primary" alt="{{p.oso.nombre}}" width="150" height="150">
+							<h2 class="h4 mt-3 mb-0">{{p.oso.nombre}}</h2>
+						</div>
+					</section>
+				</div>
+				<div class="col-md-8">
+					<section class="card border-0 shadow-sm">
+						<div class="card-body">
+							<h3 class="h5 text-primary">Información</h3>
+							<p class="mb-2"><strong>Dieta:</strong> {{p.oso.caracteristicas.dieta}}</p>
+							<p class="mb-2"><strong>Peso:</strong> {{p.oso.caracteristicas.peso}}</p>
+							<p class="mb-0"><strong>Edad:</strong> {{p.oso.edad}} años</p>
+						</div>
+					</section>
+				</div>
+
+
+			</div>
+
+			<div class="row align-items-center mb-4">
+				<div class="col-md-4 mb-3 mb-md-0">
+					<section class="card border-0 shadow-sm h-100">
+						<div class="card-body text-center">
+							<img ng-src="{{p.rana.avatar}}" class="img-fluid rounded-circle border border-primary" alt="{{p.rana.nombre}}" width="150" height="150">
+							<h2 class="h4 mt-3 mb-0">{{p.rana.nombre}}</h2>
+						</div>
+					</section>
+				</div>
+				<div class="col-md-8">
+					<section class="card border-0 shadow-sm">
+						<div class="card-body">
+							<h3 class="h5 text-primary">Información</h3>
+							<p class="mb-2"><strong>Dieta:</strong> {{p.rana.caracteristicas.dieta}}</p>
+							<p class="mb-2"><strong>Peso:</strong> {{p.rana.caracteristicas.peso}}</p>
+							<p class="mb-0"><strong>Edad:</strong> {{p.rana.edad}} años</p>
+						</div>
+					</section>
+				</div>
+
+
+			</div>
+           
+        </div>
+	</body>
+</html>

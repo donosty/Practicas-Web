@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app ="panda">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Práctica - Profesor</title>
+
+	<!--Incluir Bootstrap -->
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/animales.css">
+
+	<!--Incluir Angular Js -->
+
+	<script src="Lib/angular.min.js"></script>
+	<script src="./js/app.js"></script>
+	
+
+</head>
+	<body>
+		<div class="container py-5" ng-controller="pandaCtrl">
+
+			<header class="page-header text-center mb-5">
+				<span class="eyebrow">Fichas del cuidador</span>
+				<h1>Mis animales</h1>
+				<p class="mb-0">Conoce sus características y actualiza sus datos.</p>
+			</header>
+
+			<div class="animals-grid">
+				<article class="animal-card" ng-repeat="item in [panda, oso, rana]" ng-class="{'is-editing': editando === item}">
+					<div class="animal-visual">
+						<img ng-src="{{item.avatar}}" class="animal-avatar" alt="{{item.nombre}}">
+						<span class="animal-kind">{{$index === 0 ? 'Panda' : ($index === 1 ? 'Oso polar' : 'Rana')}}</span>
+					</div>
+					<div class="animal-content" ng-if="editando !== item">
+						<h2>{{item.nombre}}</h2>
+						<div class="details">
+							<p><span>Dieta</span>{{item.caracteristicas.dieta}}</p>
+							<p><span>Peso</span>{{item.caracteristicas.peso}}</p>
+							<p><span>Edad</span>{{item.edad}} años</p>
+						</div>
+						<button class="btn btn-primary" type="button" ng-click="editar(item)">Editar datos</button>
+					</div>
+					<form class="animal-content edit-form" ng-if="editando === item" ng-submit="guardar(item)">
+						<h2>Editar {{item.nombre}}</h2>
+						<label>Nombre<input class="form-control" type="text" ng-model="formulario.nombre" required></label>
+						<label>Dieta<input class="form-control" type="text" ng-model="formulario.caracteristicas.dieta" required></label>
+						<label>Peso<input class="form-control" type="text" ng-model="formulario.caracteristicas.peso" required></label>
+						<label>Edad<input class="form-control" type="number" min="0" ng-model="formulario.edad" required></label>
+						<div class="form-actions">
+							<button class="btn btn-success" type="submit">Guardar</button>
+							<button class="btn btn-outline-secondary" type="button" ng-click="cancelar()">Cancelar</button>
+						</div>
+					</form>
+				</article>
+			</div>
+           
+        </div>
+	</body>
+</html>
