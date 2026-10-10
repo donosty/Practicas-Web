@@ -1,0 +1,212 @@
+Actúa como un desarrollador web frontend con experiencia en AngularJS 1.8.2, JavaScript, HTML5, CSS3, Bootstrap y diseño de interfaces académicas profesionales.
+Tu tarea es implementar de principio a fin la Práctica 6: Directorio Académico, siguiendo estrictamente los requisitos descritos a continuación. Trabaja directamente sobre el repositorio abierto en el editor.
+1. Antes de programar
+Primero, analiza el proyecto actual que es la carpeta Practica-Directorio:
+Examina los archivos, carpetas, dependencias y tecnologías existentes.
+Identifica si ya hay código que pueda reutilizarse.
+Si el repositorio está vacío, crea la estructura mínima necesaria.
+No sobrescribas archivos importantes sin revisar su contenido.
+No agregues frameworks, dependencias o herramientas de compilación innecesarias.
+Si existe una implementación previa, conserva lo que funcione y adapta únicamente lo necesario.
+Después, presenta brevemente la estructura que utilizarás y procede con la implementación completa, sin detenerte únicamente en un plan.
+2. Objetivo de la aplicación
+Construye un pequeño sistema web institucional denominado Directorio Académico, que permita:
+Visualizar el perfil de un profesor o alumno.
+Navegar entre al menos cuatro perfiles iniciales.
+Editar los datos de un perfil.
+Guardar los cambios sin recargar la página.
+Cancelar una edición y descartar todos los cambios realizados.
+Registrar nuevos perfiles mediante un formulario vacío.
+Mostrar inmediatamente el perfil recién registrado.
+Toda la aplicación debe funcionar en el navegador, sin necesidad de un backend ni de una base de datos.
+3. Restricciones académicas obligatorias
+Esta práctica tiene como objetivo consolidar el uso de AngularJS, objetos JavaScript y $scope.
+Utiliza AngularJS 1.8.2, no Angular moderno.
+Está estrictamente prohibido utilizar:
+ng-repeat
+ng-options
+Filtros de AngularJS, tanto integrados como personalizados.
+No sustituyas estas restricciones por React, Vue, Angular moderno ni por generación dinámica del directorio mediante JavaScript ajeno a los conceptos de la práctica.
+Implementa explícitamente la lógica de las vistas, los perfiles y sus formularios con las herramientas solicitadas.
+4. Tecnologías requeridas
+Utiliza:
+HTML5 para la estructura.
+CSS3 para el diseño personalizado.
+Bootstrap para la distribución y responsividad.
+AngularJS 1.8.2 para la lógica y la vinculación de datos.
+Animate.css para las animaciones.
+JavaScript para definir los objetos y la lógica de negocio.
+Puedes cargar AngularJS, Bootstrap y Animate.css mediante CDN, siempre que las versiones sean compatibles entre sí. Si el proyecto ya tiene dependencias configuradas, revisa su compatibilidad antes de modificarlas.
+Evita incorporar bibliotecas adicionales que no sean necesarias.
+5. Organización de archivos
+Si no existe una estructura previa que deba conservarse, organiza el proyecto de esta forma:
+index.html: estructura de la aplicación, directivas AngularJS y vistas.
+css/styles.css: estilos personalizados y diseño responsivo.
+js/app.js: módulo AngularJS, controlador, datos y funciones.
+assets/: fotografías locales, si se necesitan.
+Mantén separadas las responsabilidades del HTML, CSS y JavaScript. No concentres toda la aplicación en un único archivo si no es necesario.
+6. Modelo de datos
+Define en el controlador al menos cuatro perfiles iniciales como objetos JavaScript almacenados en un arreglo.
+Cada objeto debe contener las siguientes propiedades:
+nombre
+edad
+fechaNacimiento
+correo
+departamento o carrera
+especialidad
+biografia
+fotografia
+Utiliza datos ficticios, coherentes y apropiados para una institución universitaria. No utilices información personal real.
+Cada perfil debe tener información completa y una fotografía representativa. Usa imágenes locales si están disponibles o URLs de imágenes accesibles, con un mecanismo de respaldo si alguna imagen no carga.
+Gestiona los datos y las funciones a través de $scope.
+Para cumplir la restricción de no utilizar ng-repeat, implementa la navegación entre los perfiles con controles como «Anterior» y «Siguiente», un índice de perfil actual y las comprobaciones necesarias para evitar accesos fuera de los límites del arreglo.
+La interfaz debe mostrar correctamente el perfil seleccionado sin generar dinámicamente una lista mediante directivas prohibidas.
+7. Vista de consulta del perfil
+Diseña una tarjeta de perfil institucional que presente:
+Fotografía destacada.
+Nombre completo.
+Edad y fecha de nacimiento.
+Departamento o carrera.
+Especialidad.
+Correo electrónico.
+Biografía.
+Botón «Editar perfil».
+Botón «Nuevo perfil».
+Controles para navegar entre los perfiles existentes.
+Utiliza expresiones AngularJS para mostrar los datos y ng-src para cargar la fotografía desde la propiedad correspondiente.
+La vista de consulta debe ser la pantalla inicial de la aplicación.
+8. Edición de perfiles
+Implementa la edición mediante las siguientes reglas:
+Al pulsar «Editar perfil», crea una copia del objeto seleccionado usando angular.copy().
+Guarda esa copia en una variable llamada exactamente Editando.
+Cambia a la vista de edición.
+Vincula todos los campos del formulario mediante ng-model.
+Incluye botones «Guardar cambios» y «Cancelar».
+Al guardar, actualiza el perfil original con los datos de Editando.
+Al cancelar, descarta la copia temporal y conserva intacto el perfil original.
+Regresa a la vista de consulta después de guardar o cancelar.
+Es fundamental que modificar campos del formulario no altere el objeto original antes de confirmar el guardado.
+Utiliza ng-if para controlar la visibilidad de la vista de consulta y la vista de edición.
+9. Registro de nuevos perfiles
+Implementa el alta de perfiles con estas reglas:
+Al pulsar «Nuevo perfil», crea un objeto llamado exactamente NuevoProfesor.
+Inicializa todas sus propiedades con valores vacíos apropiados.
+Muestra un formulario vacío con los campos requeridos.
+Vincula los campos mediante ng-model.
+Incluye botones para guardar el nuevo perfil y cancelar el registro.
+Valida los campos obligatorios y el formato del correo electrónico.
+Al guardar, agrega una copia del objeto al arreglo de perfiles utilizando push().
+Selecciona el perfil recién agregado y muestra inmediatamente su tarjeta.
+Al cancelar, no agregues ningún registro.
+Usa angular.copy() al agregar el nuevo perfil para evitar conservar referencias innecesarias al objeto temporal del formulario.
+Permite que el usuario registre varios perfiles consecutivamente.
+No implementes el alta utilizando ng-repeat, ng-options ni filtros.
+10. Control de vistas y estados
+Utiliza ng-if para gestionar de forma explícita las vistas principales:
+Consulta del perfil.
+Edición de un perfil.
+Registro de un nuevo perfil.
+Define variables de estado claras en $scope para determinar qué vista está activa.
+Implementa funciones con responsabilidades concretas, por ejemplo:
+editarPerfil()
+guardarCambios()
+cancelarEdicion()
+nuevoPerfil()
+guardarNuevoPerfil()
+cancelarNuevoPerfil()
+perfilAnterior()
+perfilSiguiente()
+Puedes adaptar los nombres si existe una convención previa, pero conserva los nombres Editando y NuevoProfesor exigidos por la práctica.
+Evita mezclar la lógica de edición con la de registro. Cada flujo debe tener su propio manejo de estados y validaciones.
+11. Diseño visual y experiencia de usuario
+La aplicación no debe parecer un ejercicio básico de formularios. Debe tener la apariencia de un pequeño sistema académico real.
+Diseña una interfaz moderna, limpia y profesional con:
+Encabezado institucional con el nombre «Directorio Académico».
+Una identidad visual coherente, preferentemente basada en azul marino, blanco y tonos neutros.
+Tarjeta de perfil con fotografía destacada.
+Jerarquía visual clara entre nombre, especialidad y datos secundarios.
+Formularios organizados en columnas cuando haya espacio suficiente.
+Botones consistentes para acciones principales y secundarias.
+Espaciado equilibrado, bordes suaves y sombras discretas.
+Estados visuales para botones, campos enfocados y errores de validación.
+Mensajes claros al guardar, cancelar o detectar información inválida.
+Diseño adaptable a computadoras, tabletas y teléfonos móviles.
+En pantallas pequeñas, reorganiza la tarjeta y los formularios para evitar desbordamientos horizontales.
+Evita la saturación visual, las animaciones excesivas y los elementos decorativos que dificulten la lectura.
+12. Animaciones con Animate.css
+Integra Animate.css y utiliza al menos dos animaciones distintas.
+Como mínimo:
+fadeIn para la aparición de una vista o tarjeta.
+fadeInUp para la aparición de un formulario o sus elementos principales.
+Las animaciones deben aplicarse al cambiar de vista o al presentar contenido relevante, no únicamente al cargar la página.
+Comprueba que las clases se utilicen con una versión compatible de Animate.css y que no interfieran con el funcionamiento de ng-if.
+Mantén las transiciones breves y profesionales.
+13. Validaciones y robustez
+Comprueba que:
+No se pueda guardar un perfil con campos obligatorios vacíos.
+El correo electrónico tenga un formato válido.
+La navegación no permita índices negativos ni superiores al último perfil.
+Cancelar una edición no modifique el perfil original.
+Cancelar un registro no agregue objetos al arreglo.
+Guardar una edición actualice el perfil correcto.
+Guardar un nuevo perfil lo agregue exactamente una vez.
+La fotografía tenga una alternativa visual cuando falle su carga.
+Los botones no ejecuten acciones incorrectas cuando la vista activa no corresponda.
+No existan errores de sintaxis, referencias indefinidas ni errores evitables en la consola del navegador.
+Utiliza validaciones nativas de formularios AngularJS cuando sea apropiado y muestra los mensajes de error de forma comprensible.
+No añadas funcionalidades innecesarias como autenticación, persistencia en servidores o servicios REST.
+14. Criterios de aceptación y pruebas
+Antes de terminar, comprueba los siguientes escenarios:
+Prueba 1: carga inicial
+La aplicación abre sin errores.
+Se muestra un perfil inicial completo.
+Los cuatro perfiles iniciales existen en el arreglo.
+La navegación permite consultar los perfiles.
+Prueba 2: edición correcta
+Abre la edición de un perfil.
+Modifica varios campos.
+Guarda los cambios.
+Comprueba que la tarjeta muestra los valores actualizados sin recargar la página.
+Prueba 3: cancelación de edición
+Modifica varios campos.
+Cancela la edición.
+Comprueba que los valores originales permanecen intactos.
+Prueba 4: registro correcto
+Abre el formulario de nuevo perfil.
+Introduce datos válidos.
+Guarda.
+Comprueba que el número de perfiles aumenta en uno y que el nuevo perfil aparece inmediatamente.
+Prueba 5: cancelación de registro
+Abre el formulario de alta.
+Introduce algunos datos.
+Cancela.
+Comprueba que el arreglo no ha aumentado.
+Prueba 6: validación
+Intenta guardar un formulario vacío.
+Introduce un correo inválido.
+Comprueba que se impide el guardado y que se muestran mensajes útiles.
+Prueba 7: responsividad y animaciones
+Revisa el diseño en escritorio y móvil.
+Comprueba las animaciones de entrada.
+Verifica que los botones y formularios siguen funcionando.
+Prueba 8: restricciones académicas
+Busca en el código el uso de ng-repeat, ng-options y filtros.
+Confirma que ninguno se utiliza.
+Verifica el uso real de $scope, ng-model, ng-click, ng-if, ng-src, angular.copy() y push().
+Si no dispones de un navegador o de herramientas de prueba, no afirmes que has ejecutado las pruebas: distingue entre lo que hayas verificado y lo que quede pendiente de comprobación manual.
+15. Entrega final
+La práctica requiere entregar la carpeta completa con HTML, CSS, JavaScript, fotografías y librerías necesarias, además de dos capturas:
+La vista principal con un perfil visible.
+El formulario de edición de un perfil.
+Al finalizar:
+Comprueba que todos los archivos necesarios estén presentes.
+Indica cómo ejecutar la aplicación localmente.
+Resume los archivos creados o modificados.
+Explica brevemente dónde se implementó cada requisito importante.
+Indica qué pruebas se ejecutaron y cuáles deben verificarse manualmente.
+Proporciona las instrucciones para obtener las dos capturas de pantalla.
+Señala cualquier requisito que no hayas podido completar.
+No entregues únicamente fragmentos de código, pseudocódigo o instrucciones para que otra persona lo implemente. Realiza los cambios directamente en el repositorio y deja la aplicación lista para probar.
+Instrucción final
+Prioriza el cumplimiento exacto de la práctica, la claridad del código y el correcto funcionamiento de todos los flujos. No sacrifiques los requisitos académicos para conseguir un diseño más complejo.
+Antes de dar la tarea por terminada, revisa la implementación completa frente a cada uno de los criterios de aceptación y corrige los problemas que encuentres.
