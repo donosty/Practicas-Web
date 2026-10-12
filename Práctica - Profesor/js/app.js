@@ -6,15 +6,30 @@ app.controller('pandaCtrl', function($scope){
     $scope.oso = osoData
     $scope.rana = ranaData
 
-    $scope.Editando = {}
-    $scope.mensajePanda = ""
-    $scope.EditarPanda = function(){
-        angular.copy($scope.panda, $scope.Editando)
-        $scope.mensajePanda = ""
+    $scope.ediciones = {
+        panda: {},
+        oso: {},
+        rana: {}
+    }
+    $scope.formularios = {
+        panda: false,
+        oso: false,
+        rana: false
+    }
+    $scope.mensajes = {
+        panda: "",
+        oso: "",
+        rana: ""
     }
 
-    $scope.guardarPanda = function(){
-        var datos = $scope.Editando
+    $scope.editarAnimal = function(nombre, animal){
+        angular.copy(animal, $scope.ediciones[nombre])
+        $scope.mensajes[nombre] = ""
+        $scope.formularios[nombre] = true
+    }
+
+    $scope.guardarAnimal = function(nombre, animal){
+        var datos = $scope.ediciones[nombre]
         var camposCompletos = datos && datos.caracteristicas &&
             String(datos.nombre || '').trim() !== '' &&
             String(datos.caracteristicas.dieta || '').trim() !== '' &&
@@ -23,18 +38,20 @@ app.controller('pandaCtrl', function($scope){
             String(datos.edad).trim() !== ''
 
         if (!camposCompletos) {
-            $scope.mensajePanda = "Completa todos los campos antes de guardar."
+            $scope.mensajes[nombre] = "Completa todos los campos antes de guardar."
             return
         }
 
-        angular.copy($scope.Editando, $scope.panda)
-        $scope.Editando = {}
-        $scope.mensajePanda = "Datos guardados correctamente."
+        angular.copy(datos, animal)
+        $scope.ediciones[nombre] = {}
+        $scope.mensajes[nombre] = "Datos guardados correctamente."
+        $scope.formularios[nombre] = false
     }
 
-    $scope.cancelarPanda = function(){
-        $scope.Editando = {}
-        $scope.mensajePanda = "Edición cancelada."
+    $scope.cancelarAnimal = function(nombre){
+        $scope.ediciones[nombre] = {}
+        $scope.mensajes[nombre] = "Edición cancelada."
+        $scope.formularios[nombre] = false
     }
 });
 

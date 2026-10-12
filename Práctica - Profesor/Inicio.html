@@ -8,6 +8,7 @@
 	<!--Incluir Bootstrap -->
 
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
 	<!--Incluir Angular Js -->
 
@@ -29,7 +30,7 @@
 				<div class="col-md-4 mb-3 mb-md-0">
 					<section class="card border-0 shadow-sm h-100">
 						<div class="card-body text-center">
-							<img ng-src="{{panda.avatar}}" class="img-fluid rounded-circle border border-primary" alt="{{p.panda.nombre}}" width="150" height="150">
+							<img ng-src="{{panda.avatar}}" class="img-fluid rounded-circle border border-primary animate__animated animate__zoomIn" alt="{{panda.nombre}}" width="150" height="150">
 							<h2 class="h4 mt-3 mb-0">{{panda.nombre}}</h2>
 						</div>
 					</section>
@@ -44,66 +45,69 @@
 						</div>
 					</section>
 
-					<button class="btn btn-primary mt-2" ng-click="EditarPanda()">Editar</button>
+					<button class="btn btn-primary mt-2" ng-click="editarAnimal('panda', panda)">Editar</button>
 
 				</div>
 
 			</div>
 
-			<div class="row">
-				<div class="col-md-8">
-					<section class="card border-0 shadow-sm">
-						<div class="card-body">
-							Nombre
-							<input type="text" class="form-control" ng-model="Editando.nombre" >
-						</div>
-					</section>
+			<div ng-show="formularios.panda" ng-class="{'animate__fadeIn': formularios.panda}" class="animate__animated">
+				<h3 class="h5 text-primary">Editar Panda</h3>
+				<div class="row">
+					<div class="col-md-8">
+						<section class="card border-0 shadow-sm">
+							<div class="card-body">
+								Nombre
+								<input type="text" class="form-control" ng-model="ediciones.panda.nombre" >
+							</div>
+						</section>
+					</div>
 				</div>
-			</div>
 
-			<div class="row">
-				<div class="col-md-8">
-					<section class="card border-0 shadow-sm">
-						<div class="card-body">
-							Dieta
-							<input type="text" class="form-control" ng-model="Editando.caracteristicas.dieta" >
-						</div>
-					</section>
+				<div class="row">
+					<div class="col-md-8">
+						<section class="card border-0 shadow-sm">
+							<div class="card-body">
+								Dieta
+								<input type="text" class="form-control" ng-model="ediciones.panda.caracteristicas.dieta" >
+							</div>
+						</section>
+					</div>
 				</div>
-			</div>
 
-			<div class="row">
-				<div class="col-md-8">
-					<section class="card border-0 shadow-sm">
-						<div class="card-body">
-							Peso
-							<input type="text" class="form-control" ng-model="Editando.caracteristicas.peso" >
-						</div>
-					</section>
+				<div class="row">
+					<div class="col-md-8">
+						<section class="card border-0 shadow-sm">
+							<div class="card-body">
+								Peso
+								<input type="text" class="form-control" ng-model="ediciones.panda.caracteristicas.peso" >
+							</div>
+						</section>
+					</div>
 				</div>
-			</div>
 
-			<div class="row">
-				<div class="col-md-8">
-					<section class="card border-0 shadow-sm">
-						<div class="card-body">
-							Edad
-							<input type="text" class="form-control" ng-model="Editando.edad" >
-						</div>
-					</section>
+				<div class="row">
+					<div class="col-md-8">
+						<section class="card border-0 shadow-sm">
+							<div class="card-body">
+								Edad
+								<input type="text" class="form-control" ng-model="ediciones.panda.edad" >
+							</div>
+						</section>
+					</div>
 				</div>
-			</div>
 
-			<button class="btn btn-success mt-2" ng-click="guardarPanda()">Guardar</button>
-			<button class="btn btn-danger mt-2" ng-click="cancelarPanda()">Cancelar</button>
-			<p class="text-info mt-2" ng-if="mensajePanda">{{mensajePanda}}</p>
+				<button class="btn btn-success mt-2" ng-click="guardarAnimal('panda', panda)">Guardar</button>
+				<button class="btn btn-danger mt-2" ng-click="cancelarAnimal('panda')">Cancelar</button>
+			</div>
+			<p class="text-info mt-2" ng-if="mensajes.panda">{{mensajes.panda}}</p>
 
 			<div class="row align-items-center mb-4">
 				<div class="col-md-4 mb-3 mb-md-0">
 					<section class="card border-0 shadow-sm h-100">
 						<div class="card-body text-center">
-							<img ng-src="{{p.oso.avatar}}" class="img-fluid rounded-circle border border-primary" alt="{{p.oso.nombre}}" width="150" height="150">
-							<h2 class="h4 mt-3 mb-0">{{p.oso.nombre}}</h2>
+							<img ng-src="{{oso.avatar}}" class="img-fluid rounded-circle border border-primary animate__animated animate__bounceIn" alt="{{oso.nombre}}" width="150" height="150">
+							<h2 class="h4 mt-3 mb-0">{{oso.nombre}}</h2>
 						</div>
 					</section>
 				</div>
@@ -111,22 +115,70 @@
 					<section class="card border-0 shadow-sm">
 						<div class="card-body">
 							<h3 class="h5 text-primary">Información</h3>
-							<p class="mb-2"><strong>Dieta:</strong> {{p.oso.caracteristicas.dieta}}</p>
-							<p class="mb-2"><strong>Peso:</strong> {{p.oso.caracteristicas.peso}}</p>
-							<p class="mb-0"><strong>Edad:</strong> {{p.oso.edad}} años</p>
+							<p class="mb-2"><strong>Dieta:</strong> {{oso.caracteristicas.dieta}}</p>
+							<p class="mb-2"><strong>Peso:</strong> {{oso.caracteristicas.peso}}</p>
+							<p class="mb-0"><strong>Edad:</strong> {{oso.edad}} años</p>
 						</div>
 					</section>
+						<button class="btn btn-primary mt-2" ng-click="editarAnimal('oso', oso)">Editar</button>
 				</div>
 
 
 			</div>
 
+			<div ng-show="formularios.oso" ng-class="{'animate__fadeIn': formularios.oso}" class="animate__animated">
+				<h3 class="h5 text-primary">Editar Oso</h3>
+				<div class="row">
+					<div class="col-md-8">
+						<section class="card border-0 shadow-sm">
+							<div class="card-body">
+								Nombre
+								<input type="text" class="form-control" ng-model="ediciones.oso.nombre">
+							</div>
+						</section>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<section class="card border-0 shadow-sm">
+							<div class="card-body">
+								Dieta
+								<input type="text" class="form-control" ng-model="ediciones.oso.caracteristicas.dieta">
+							</div>
+						</section>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<section class="card border-0 shadow-sm">
+							<div class="card-body">
+								Peso
+								<input type="text" class="form-control" ng-model="ediciones.oso.caracteristicas.peso">
+							</div>
+						</section>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<section class="card border-0 shadow-sm">
+							<div class="card-body">
+								Edad
+								<input type="text" class="form-control" ng-model="ediciones.oso.edad">
+							</div>
+						</section>
+					</div>
+				</div>
+				<button class="btn btn-success mt-2" ng-click="guardarAnimal('oso', oso)">Guardar</button>
+				<button class="btn btn-danger mt-2" ng-click="cancelarAnimal('oso')">Cancelar</button>
+			</div>
+			<p class="text-info mt-2" ng-if="mensajes.oso">{{mensajes.oso}}</p>
+
 			<div class="row align-items-center mb-4">
 				<div class="col-md-4 mb-3 mb-md-0">
 					<section class="card border-0 shadow-sm h-100">
 						<div class="card-body text-center">
-							<img ng-src="{{p.rana.avatar}}" class="img-fluid rounded-circle border border-primary" alt="{{p.rana.nombre}}" width="150" height="150">
-							<h2 class="h4 mt-3 mb-0">{{p.rana.nombre}}</h2>
+							<img ng-src="{{rana.avatar}}" class="img-fluid rounded-circle border border-primary animate__animated animate__rotateIn" alt="{{rana.nombre}}" width="150" height="150">
+							<h2 class="h4 mt-3 mb-0">{{rana.nombre}}</h2>
 						</div>
 					</section>
 				</div>
@@ -134,15 +186,63 @@
 					<section class="card border-0 shadow-sm">
 						<div class="card-body">
 							<h3 class="h5 text-primary">Información</h3>
-							<p class="mb-2"><strong>Dieta:</strong> {{p.rana.caracteristicas.dieta}}</p>
-							<p class="mb-2"><strong>Peso:</strong> {{p.rana.caracteristicas.peso}}</p>
-							<p class="mb-0"><strong>Edad:</strong> {{p.rana.edad}} años</p>
+							<p class="mb-2"><strong>Dieta:</strong> {{rana.caracteristicas.dieta}}</p>
+							<p class="mb-2"><strong>Peso:</strong> {{rana.caracteristicas.peso}}</p>
+							<p class="mb-0"><strong>Edad:</strong> {{rana.edad}} años</p>
 						</div>
 					</section>
+						<button class="btn btn-primary mt-2" ng-click="editarAnimal('rana', rana)">Editar</button>
 				</div>
 
 
 			</div>
+
+			<div ng-show="formularios.rana" ng-class="{'animate__fadeIn': formularios.rana}" class="animate__animated">
+				<h3 class="h5 text-primary">Editar Rana</h3>
+				<div class="row">
+					<div class="col-md-8">
+						<section class="card border-0 shadow-sm">
+							<div class="card-body">
+								Nombre
+								<input type="text" class="form-control" ng-model="ediciones.rana.nombre">
+							</div>
+						</section>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<section class="card border-0 shadow-sm">
+							<div class="card-body">
+								Dieta
+								<input type="text" class="form-control" ng-model="ediciones.rana.caracteristicas.dieta">
+							</div>
+						</section>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<section class="card border-0 shadow-sm">
+							<div class="card-body">
+								Peso
+								<input type="text" class="form-control" ng-model="ediciones.rana.caracteristicas.peso">
+							</div>
+						</section>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<section class="card border-0 shadow-sm">
+							<div class="card-body">
+								Edad
+								<input type="text" class="form-control" ng-model="ediciones.rana.edad">
+							</div>
+						</section>
+					</div>
+				</div>
+				<button class="btn btn-success mt-2" ng-click="guardarAnimal('rana', rana)">Guardar</button>
+				<button class="btn btn-danger mt-2" ng-click="cancelarAnimal('rana')">Cancelar</button>
+			</div>
+			<p class="text-info mt-2" ng-if="mensajes.rana">{{mensajes.rana}}</p>
            
         </div>
 	</body>
