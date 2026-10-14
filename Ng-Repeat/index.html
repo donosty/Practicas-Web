@@ -11,6 +11,9 @@
         <!-- Animate.css -->
         <link rel="stylesheet" href="css/Animate/animate.css">
 
+        <!-- Estilos de la tabla de alumnos -->
+        <link rel="stylesheet" href="css/alumnos.css">
+
         <!-- Incluir AngularJS -->
         <script src="Lib/angular.min.js"></script>
 
@@ -31,20 +34,47 @@
             </ul>
 
            <div class="container">
-                <h3>Alummnos</h3>
-                <table class="table table-striped table-bordered">
-                    <tr>
-                        <th>nombre</th>
-                        <th>Edad</th>
-                        <th>Clase</th>
-                    </tr>
+                <div class="students-heading">
+                    <div>
+                        <p class="eyebrow">Directorio universitario</p>
+                        <h3>Alumnos</h3>
+                    </div>
+                    <span class="students-count">{{ listadoAlumnos.alumnos.length }} registros</span>
+                </div>
 
-                    <tr ng-repeat="alumno in listadoAlumnos.alumnos">
-                        <td>{{ alumno.nombre }}</td>
-                        <td>{{ alumno.edad }}</td>
-                        <td>{{ alumno.clase }}</td>
-                    </tr>
-                </table>
+                <div class="table-responsive students-table-wrapper">
+                    <table class="table students-table">
+                        <caption class="sr-only">Listado de alumnos con sus datos de contacto</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Avatar</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Sexo</th>
+                                <th scope="col">Teléfono</th>
+                                <th scope="col">Celular</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="alumno in listadoAlumnos.alumnos track by alumno.nombre">
+                                <td class="avatar-cell">
+                                    <img class="student-avatar"
+                                         ng-src="img/{{ alumno.avatar }}"
+                                         alt="Foto de {{ alumno.nombre }}">
+                                </td>
+                                <td class="student-name">{{ alumno.nombre }}</td>
+                                <td>
+                                    <span class="gender-badge">{{ alumno.sexo }}</span>
+                                </td>
+                                <td class="contact-cell">
+                                    <span class="contact-label">Tel.</span>{{ alumno.telefono }}
+                                </td>
+                                <td class="contact-cell">
+                                    <span class="contact-label">Cel.</span>{{ alumno.celular }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
            </div>
 
            <div class="container">
