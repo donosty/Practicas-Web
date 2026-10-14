@@ -11,7 +11,7 @@ app.controller('DirectorioController', function ($scope) {
       especialidad: 'Arquitectura de Sistemas Inteligentes',
       biografia:
         'Profesora asociada con más de veinte años de experiencia en diseño de sistemas escalables, mentoría de proyectos y desarrollo curricular en ingeniería.',
-      fotografia: 'img/messi.jpg'
+      fotografia: 'img/Elena.jpg'
     },
     {
       nombre: 'Dr. Carlos Mendoza Ruiz',
@@ -22,7 +22,7 @@ app.controller('DirectorioController', function ($scope) {
       especialidad: 'Econometría y Modelación Financiera',
       biografia:
         'Investigador de políticas públicas y modelos predictivos aplicados a mercados globales. Coordina seminarios avanzados para estudiantes de maestría.',
-      fotografia: 'img/cr7.jpg'
+      fotografia: 'img/Carlos.jpg'
     },
     {
       nombre: 'Dra. Sofía Moreno López',
@@ -33,7 +33,7 @@ app.controller('DirectorioController', function ($scope) {
       especialidad: 'Neurología Clínica y Neurociencia Cognitiva',
       biografia:
         'Especialista en neuropatología aplicada y diagnóstico de trastornos cognitivos. Participa en proyectos interdisciplinarios de investigación biomédica.',
-      fotografia: 'img/vandijk.jpg'
+      fotografia: 'img/Sofia.jpg'
     },
     {
       nombre: 'Ing. Mateo Álvarez Serrano',
@@ -44,7 +44,7 @@ app.controller('DirectorioController', function ($scope) {
       especialidad: 'Experiencia de Usuario e Interfaces Interactivas',
       biografia:
         'Docente enfocado en diseño centrado en el usuario, prototipado y accesibilidad digital. Promueve soluciones visuales con impacto académico y social.',
-      fotografia: 'img/de-bruyne.jpg'
+      fotografia: 'img/Mateo.jpg'
     }
   ];
 
