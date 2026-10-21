@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html ng-app="universidadApp">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Filtros - ng-repeat</title>
+
+
+        <!-- Incluir Bootstrap -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+
+        <!-- Animate.css -->
+        <link rel="stylesheet" href="css/animate.css">
+
+        <!-- Incluir AngularJS -->
+        <script src="js/Lib/angular.min.js"></script>
+
+        <script src="js/app.js"></script>
+        
+        <style>
+            .avatar{
+                width: 75px;
+                height: 75px;
+            }
+
+            .acciones{
+                min-width: 170px;
+                vertical-align: middle !important;
+            }
+
+            .acciones .btn{
+                width: 76px;
+                margin: 2px;
+            }
+
+            .campo-edicion{
+                min-width: 130px;
+            }
+
+            .filtros-tabla input{
+                min-width: 100px;
+            }
+
+        </style>
+
+    </head>    
+    <body>
+
+        <div class="container" ng-controller="listadoCtrl">
+            
+            <h1>Filtros</h1>
+            <h4>Para el ng-repeat</h4>
+            <hr>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Avatar</th>
+                        <th>País</th>
+                        <th class="acciones">Acciones</th>
+                        <th>
+                            <a href="" ng-click="ordenarPor('sexo')">
+                                Sexo
+                            </a>
+                            <input type="search"
+                                   class="form-control filtros-tabla"
+                                   ng-model="filtro.sexo"
+                                   placeholder="Filtrar sexo"
+                                   aria-label="Filtrar por sexo">
+                        </th>
+                        <th>
+                            <a href="" ng-click="ordenarPor('nombre')">
+                                Nombre
+                            </a>
+                            <input type="search"
+                                   class="form-control filtros-tabla"
+                                   ng-model="filtro.nombre"
+                                   placeholder="Filtrar nombre"
+                                   aria-label="Filtrar por nombre">
+                        </th>
+                        <th>
+                            <a href="" ng-click="ordenarPor('telefono')">
+                                Telefono
+                            </a>
+                            <input type="search"
+                                   class="form-control filtros-tabla"
+                                   ng-model="filtro.telefono"
+                                   placeholder="Filtrar telefono"
+                                   aria-label="Filtrar por telefono">
+                        </th>
+                        <th>
+                            <a href="" ng-click="ordenarPor('celular')">
+                                Celular
+                            </a>
+                            <input type="search"
+                                   class="form-control filtros-tabla"
+                                   ng-model="filtro.celular"
+                                   placeholder="Filtrar celular"
+                                   aria-label="Filtrar por celular">
+                        </th>
+                        <th>
+                            <a href="" ng-click="ordenarPor('asignatura')">
+                                Asignatura
+                            </a>
+                            <input type="search"
+                                   class="form-control filtros-tabla"
+                                   ng-model="filtro.asignatura"
+                                   placeholder="Filtrar asignatura"
+                                   aria-label="Filtrar por asignatura">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="persona in personas | filter:{
+                        sexo: filtro.sexo,
+                        nombre: filtro.nombre,
+                        telefono: filtro.telefono,
+                        celular: filtro.celular,
+                        asignatura: filtro.asignatura
+                    } | orderBy:ordenSeleccionado:reverse">
+                        <td>
+                            <img class="avatar"
+                                 ng-src="img/{{ persona.avatar }}"
+                                 alt="Avatar de {{ persona.nombre }}">
+                        </td>
+                        <td>{{ persona.pais.nombre }} ({{ persona.pais.id }})</td>
+                        <td class="acciones">
+                            <div ng-if="persona !== personaOriginal">
+                                <button type="button"
+                                        class="btn btn-primary btn-sm"
+                                        ng-click="editarPersona(persona)">
+                                    Editar
+                                </button>
+                                <button type="button"
+                                        class="btn btn-danger btn-sm"
+                                        ng-click="eliminarPersona(persona)">
+                                    Eliminar
+                                </button>
+                            </div>
+                            <div ng-if="persona === personaOriginal">
+                                <button type="button"
+                                        class="btn btn-success btn-sm"
+                                        ng-click="guardarEdicion()">
+                                    Guardar
+                                </button>
+                                <button type="button"
+                                        class="btn btn-default btn-sm"
+                                        ng-click="cancelarEdicion()">
+                                    Cancelar
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="persona !== personaOriginal">{{ persona.sexo }}</span>
+                            <input ng-if="persona === personaOriginal"
+                                   class="form-control campo-edicion"
+                                   type="text"
+                                   ng-model="personaEnEdicion.sexo"
+                                   aria-label="Editar sexo">
+                        </td>
+                        <td>
+                            <span ng-if="persona !== personaOriginal">{{ persona.nombre }}</span>
+                            <input ng-if="persona === personaOriginal"
+                                   class="form-control campo-edicion"
+                                   type="text"
+                                   ng-model="personaEnEdicion.nombre"
+                                   aria-label="Editar nombre">
+                        </td>
+                        <td>
+                            <span ng-if="persona !== personaOriginal">{{ persona.telefono }}</span>
+                            <input ng-if="persona === personaOriginal"
+                                   class="form-control campo-edicion"
+                                   type="text"
+                                   ng-model="personaEnEdicion.telefono"
+                                   aria-label="Editar teléfono">
+                        </td>
+                        <td>
+                            <span ng-if="persona !== personaOriginal">{{ persona.celular }}</span>
+                            <input ng-if="persona === personaOriginal"
+                                   class="form-control campo-edicion"
+                                   type="text"
+                                   ng-model="personaEnEdicion.celular"
+                                   aria-label="Editar celular">
+                        </td>
+                        <td>
+                            <span ng-if="persona !== personaOriginal">{{ persona.asignatura }}</span>
+                            <input ng-if="persona === personaOriginal"
+                                   class="form-control campo-edicion"
+                                   type="text"
+                                   ng-model="personaEnEdicion.asignatura"
+                                   aria-label="Editar asignatura">
+                        </td>
+                    </tr>
+                    <tr ng-if="(personas | filter:{
+                        sexo: filtro.sexo,
+                        nombre: filtro.nombre,
+                        telefono: filtro.telefono,
+                        celular: filtro.celular,
+                        asignatura: filtro.asignatura
+                    }).length === 0">
+                        <td colspan="8" class="text-center">No se encontraron resultados.</td>
+                    </tr>
+                </tbody>
+        
+            </table>
+
+            <div>
+                <h2>Seleccione el pais: {{ pais_seleccionado }}</h2>
+                <select>
+                    <option ng-repeat="pais in paises">Clave: {{ pais.id }} Nombre: {{ pais.nombre }}</option>
+                </select>
+            </div>
+
+        </div><!-- fin del listadoCtrl -->
+
+    </body>
+</html>
