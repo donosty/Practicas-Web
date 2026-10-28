@@ -1,0 +1,16 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Celular</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="profes in profesores">
+            <td>{{ profes.id }}</td>
+            <td>{{ profes.nombre }} {{ profes.snombre }}</td>
+            <td>{{ profes.celular }}</td>
+        </tr>
+    </tbody>
+</table>

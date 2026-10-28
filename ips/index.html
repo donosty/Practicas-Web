@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app="ejemplosApp">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Detectando IPs</title>
+
+
+        <!-- Incluir Bootstrap -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+
+        <!-- Animate.css -->
+        <link rel="stylesheet" href="css/animate.css">
+
+        <!-- Incluir AngularJS -->
+        <script src="js/lib/angular.min.js"></script>
+
+        <script src="js/app.js"></script>
+        
+    </head>    
+    <body>
+
+        <div class="container" ng-controller="mainCtrl">
+            
+            <h1>Detectar IPs</h1>
+            <h4>Manejo de recursos online</h4>
+            <hr>
+            
+        
+            <div class="alert alert-info" ng-if="loading">
+                Consultando la información de la IP...
+            </div>
+
+            <div class="alert alert-danger" ng-if="error">
+                No se pudo obtener la información de la API.
+            </div>
+
+            <table class="table table-bordered table-striped" ng-if="!loading && !error">
+                <thead>
+                    <tr>
+                        <th>Campo</th>
+                        <th>Información</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>IP</th>
+                        <td>{{ ipInfo.ip }}</td>
+                    </tr>
+                    <tr>
+                        <th>Ciudad</th>
+                        <td>{{ ipInfo.city }}</td>
+                    </tr>
+                    <tr>
+                        <th>Región</th>
+                        <td>{{ ipInfo.region }}</td>
+                    </tr>
+                    <tr>
+                        <th>País</th>
+                        <td>{{ ipInfo.country_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Organización</th>
+                        <td>{{ ipInfo.org }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+        </div><!-- fin del listadoCtrl -->
+
+    </body>
+</html>

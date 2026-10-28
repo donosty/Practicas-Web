@@ -40,6 +40,20 @@
                 min-width: 100px;
             }
 
+            .selector-pais{
+                max-width: 360px;
+                margin: 20px 0;
+                padding: 16px;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                background-color: #f8f9fa;
+            }
+
+            .selector-pais h2{
+                margin-top: 0;
+                font-size: 22px;
+            }
+
         </style>
 
     </head>    
@@ -55,8 +69,18 @@
                 <thead>
                     <tr>
                         <th>Avatar</th>
-                        <th>País</th>
                         <th class="acciones">Acciones</th>
+                        <th>
+                            <a href="" ng-click="ordenarPor('pais.nombre')">
+                                País
+                            </a>
+                            <select class="form-control filtros-tabla"
+                                    ng-model="filtro.pais"
+                                    ng-options="pais.id as pais.nombre for pais in paises"
+                                    aria-label="Filtrar por país">
+                                <option value="">Todos los países</option>
+                            </select>
+                        </th>
                         <th>
                             <a href="" ng-click="ordenarPor('sexo')">
                                 Sexo
@@ -115,14 +139,14 @@
                         nombre: filtro.nombre,
                         telefono: filtro.telefono,
                         celular: filtro.celular,
-                        asignatura: filtro.asignatura
+                        asignatura: filtro.asignatura,
+                        pais: filtro.pais ? { id: filtro.pais } : {}
                     } | orderBy:ordenSeleccionado:reverse">
                         <td>
                             <img class="avatar"
                                  ng-src="img/{{ persona.avatar }}"
                                  alt="Avatar de {{ persona.nombre }}">
                         </td>
-                        <td>{{ persona.pais.nombre }} ({{ persona.pais.id }})</td>
                         <td class="acciones">
                             <div ng-if="persona !== personaOriginal">
                                 <button type="button"
@@ -149,6 +173,7 @@
                                 </button>
                             </div>
                         </td>
+                        <td>{{ persona.pais.nombre }} ({{ persona.pais.id }})</td>
                         <td>
                             <span ng-if="persona !== personaOriginal">{{ persona.sexo }}</span>
                             <input ng-if="persona === personaOriginal"
@@ -195,7 +220,8 @@
                         nombre: filtro.nombre,
                         telefono: filtro.telefono,
                         celular: filtro.celular,
-                        asignatura: filtro.asignatura
+                        asignatura: filtro.asignatura,
+                        pais: filtro.pais ? { id: filtro.pais } : {}
                     }).length === 0">
                         <td colspan="8" class="text-center">No se encontraron resultados.</td>
                     </tr>
@@ -203,10 +229,13 @@
         
             </table>
 
-            <div>
-                <h2>Seleccione el pais: {{ pais_seleccionado }}</h2>
-                <select>
-                    <option ng-repeat="pais in paises">Clave: {{ pais.id }} Nombre: {{ pais.nombre }}</option>
+            <div class="selector-pais">
+                <h2>País seleccionado: {{ pais_seleccionado.nombre }}</h2>
+                <label for="pais-seleccionado">Seleccione un país:</label>
+                <select id="pais-seleccionado"
+                        class="form-control"
+                        ng-model="pais_seleccionado"
+                        ng-options="pais.nombre for pais in paises">
                 </select>
             </div>
 

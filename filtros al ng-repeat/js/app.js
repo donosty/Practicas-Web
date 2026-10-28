@@ -11,12 +11,13 @@ app.controller('listadoCtrl', ['$scope', function($scope) {
         avatar: '',
         telefono: '',
         celular: '',
-        asignatura: ''
+        asignatura: '',
+        pais: null
     };
     $scope.ordenSeleccionado = 'nombre';
     $scope.reverse = false;
     $scope.personaEnEdicion = null;
-    var camposOrdenables = ['sexo', 'nombre', 'telefono', 'celular', 'asignatura'];
+    var camposOrdenables = ['sexo', 'nombre', 'telefono', 'celular', 'asignatura', 'pais.nombre'];
 
     $scope.ordenarPor = function(campo) {
         if (camposOrdenables.indexOf(campo) === -1) {
@@ -227,6 +228,8 @@ app.controller('listadoCtrl', ['$scope', function($scope) {
         }
     }
 
-    $scope.pais_seleccionado = 'Argentina'
+    $scope.pais_seleccionado = $scope.paises.filter(function(pais) {
+        return pais.id === 'AR';
+    })[0];
 }]);
 })();
