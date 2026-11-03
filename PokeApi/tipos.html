@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="pokeApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explora los tipos de Pokémon en PokeFinder">
+    <title>PokeFinder | Tipos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { ink: '#141414', ember: '#e63946', sun: '#ffd166' }
+                }
+            }
+        };
+    </script>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="lib/angular.min.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body ng-controller="TypesController as vm">
+    <header class="site-header">
+        <nav class="container-shell nav-bar" aria-label="Navegación principal">
+            <a class="brand" href="index.html" aria-label="PokeFinder, inicio">
+                <span class="brand-mark">●</span>
+                <span>Poke<span>Finder</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html#pokedex">Pokédex</a>
+                <a class="active-link" href="tipos.html">Tipos</a>
+                <a href="index.html#inicio">Inicio</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="types-hero">
+            <div class="container-shell">
+                <p class="eyebrow">Conoce sus fortalezas</p>
+                <h1>Elige tu <em>tipo</em> favorito.</h1>
+                <p>Explora los tipos de Pokémon y descubre una selección de sus representantes.</p>
+            </div>
+        </section>
+
+        <div class="container-shell content-area">
+            <section class="section-block">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Toda la variedad</p>
+                        <h2>Tipos de Pokémon</h2>
+                    </div>
+                    <span class="section-note">{{ vm.types.length }} categorías</span>
+                </div>
+                <div class="types-grid">
+                    <button class="type-card" type="button" ng-repeat="type in vm.types" ng-click="vm.loadType(type)" ng-class="{ 'selected-type': vm.selectedType.name === type.name }" ng-style="{ '--type-color': type.color }">
+                        <span class="type-card-icon">✦</span>
+                        <span>{{ type.label }}</span>
+                        <small>Explorar →</small>
+                    </button>
+                </div>
+            </section>
+
+            <section class="section-block type-results">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Selección de la categoría</p>
+                        <h2>Pokémon {{ vm.selectedType.label }}</h2>
+                    </div>
+                    <span class="section-note">8 descubrimientos</span>
+                </div>
+                <div class="alert error-alert" ng-if="vm.error" role="alert">{{ vm.error }}</div>
+                <div class="loading-state" ng-if="vm.loading">Cargando Pokémon de tipo {{ vm.selectedType.label }}...</div>
+                <div class="pokemon-grid" ng-if="!vm.loading">
+                    <pokemon-card ng-repeat="pokemon in vm.pokemon track by pokemon.id" pokemon="pokemon" on-select="vm.openDetails(pokemon)" on-toggle-favorite="vm.toggleFavorite(pokemon)"></pokemon-card>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div class="modal-backdrop" ng-if="vm.selectedPokemon" ng-click="vm.closeDetails()">
+        <article class="pokemon-modal" role="dialog" aria-modal="true" aria-labelledby="pokemon-title" ng-click="$event.stopPropagation()">
+            <button class="modal-close" type="button" aria-label="Cerrar detalles" ng-click="vm.closeDetails()">×</button>
+            <div class="modal-visual">
+                <span class="pokemon-number">#{{ vm.selectedPokemon.id | numberFixed:3 }}</span>
+                <img ng-src="{{ vm.selectedPokemon.image }}" alt="{{ vm.selectedPokemon.name }}">
+            </div>
+            <div class="modal-content">
+                <p class="eyebrow">Ficha de Pokémon</p>
+                <h2 id="pokemon-title">{{ vm.selectedPokemon.name | titlecase }}</h2>
+                <div class="type-tags"><span class="type-tag" ng-repeat="type in vm.selectedPokemon.types">{{ type }}</span></div>
+                <div class="stats-list">
+                    <div class="stat-row" ng-repeat="stat in vm.selectedPokemon.stats">
+                        <span>{{ stat.name }}</span><strong>{{ stat.value }}</strong>
+                        <span class="stat-track"><i ng-style="{ width: stat.value + '%' }"></i></span>
+                    </div>
+                </div>
+                <p class="ability-copy"><strong>Habilidades:</strong> {{ vm.selectedPokemon.abilities.join(', ') }}</p>
+                <button class="favorite-button modal-favorite" type="button" ng-click="vm.toggleFavorite(vm.selectedPokemon)">
+                    {{ vm.isFavorite(vm.selectedPokemon) ? '♥ Quitar de favoritos' : '♡ Guardar en favoritos' }}
+                </button>
+            </div>
+        </article>
+    </div>
+</body>
+</html>

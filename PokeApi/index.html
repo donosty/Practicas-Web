@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="pokeApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pokédex educativa construida con AngularJS y PokeAPI">
+    <title>PokeFinder | Pokédex</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#141414',
+                        ember: '#e63946',
+                        sun: '#ffd166'
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="lib/angular.min.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body ng-controller="PokedexController as vm">
+    <header class="site-header">
+        <nav class="container-shell nav-bar" aria-label="Navegación principal">
+            <a class="brand" href="#inicio" aria-label="PokeFinder, inicio">
+                <span class="brand-mark">●</span>
+                <span>Poke<span>Finder</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="#pokedex">Pokédex</a>
+                <a href="tipos.html">Tipos</a>
+                <button class="favorites-link" type="button" ng-click="vm.showFavorites = !vm.showFavorites">
+                    Favoritos <span>{{ vm.favorites.length }}</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main id="inicio">
+        <section class="hero-section">
+            <div class="container-shell hero-grid">
+                <div class="hero-copy">
+                    <p class="eyebrow">Explora. Aprende. Atrápalos todos.</p>
+                    <h1>Encuentra tu próximo <em>Pokémon</em>.</h1>
+                    <p class="hero-description">Busca entre todos los Pokémon disponibles y descubre sus estadísticas, tipos y habilidades.</p>
+                    <form class="search-form" ng-submit="vm.search()">
+                        <label class="sr-only" for="pokemon-search">Buscar Pokémon</label>
+                        <span class="search-icon">⌕</span>
+                        <input id="pokemon-search" type="search" ng-model="vm.query" placeholder="Busca por nombre o número..." autocomplete="off">
+                        <button class="search-button" type="submit">Buscar</button>
+                    </form>
+                    <p class="search-hint" ng-if="vm.catalog.length">{{ vm.catalog.length | number }} Pokémon disponibles · Presiona Enter para buscar</p>
+                </div>
+                <div class="hero-art" aria-hidden="true">
+                    <div class="hero-orbit"></div>
+                    <div class="hero-ball"><span></span></div>
+                    <div class="hero-spark spark-one">✦</div>
+                    <div class="hero-spark spark-two">✦</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container-shell content-area">
+            <div class="alert error-alert" ng-if="vm.error" role="alert">
+                {{ vm.error }} <button type="button" ng-click="vm.loadInitialData()">Reintentar</button>
+            </div>
+
+            <section id="pokedex" class="section-block" ng-if="!vm.showFavorites">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Descubre algo nuevo</p>
+                        <h2>{{ vm.searchActive ? 'Resultados de búsqueda' : 'Pokémon destacados' }}</h2>
+                    </div>
+                    <button class="text-button" type="button" ng-if="vm.searchActive" ng-click="vm.clearSearch()">Limpiar búsqueda ↗</button>
+                </div>
+                <div class="loading-state" ng-if="vm.loading">{{ vm.searchActive ? 'Buscando en la Pokédex...' : 'Cargando Pokémon...' }}</div>
+                <div class="empty-state" ng-if="!vm.loading && !vm.displayedPokemon.length">
+                    No encontramos Pokémon con ese criterio.
+                </div>
+                <div class="pokemon-grid" ng-if="!vm.loading">
+                    <pokemon-card ng-repeat="pokemon in vm.displayedPokemon track by pokemon.id" pokemon="pokemon" on-select="vm.openDetails(pokemon)" on-toggle-favorite="vm.toggleFavorite(pokemon)"></pokemon-card>
+                </div>
+            </section>
+
+            <div class="interesting-sections" ng-if="!vm.searchActive && !vm.showFavorites">
+                <section class="section-block mini-section">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Estadísticas impresionantes</p>
+                            <h2>Los de mayor poder</h2>
+                        </div>
+                        <span class="section-note">Selección competitiva</span>
+                    </div>
+                    <div class="pokemon-grid mini-grid" ng-if="!vm.collectionsLoading">
+                        <pokemon-card ng-repeat="pokemon in vm.strongestPokemon track by pokemon.id" pokemon="pokemon" on-select="vm.openDetails(pokemon)" on-toggle-favorite="vm.toggleFavorite(pokemon)"></pokemon-card>
+                    </div>
+                </section>
+
+                <section class="section-block mini-section">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Apariciones especiales</p>
+                            <h2>Pokémon más raros</h2>
+                        </div>
+                        <span class="section-note">Encuentros difíciles</span>
+                    </div>
+                    <div class="pokemon-grid mini-grid" ng-if="!vm.collectionsLoading">
+                        <pokemon-card ng-repeat="pokemon in vm.rarePokemon track by pokemon.id" pokemon="pokemon" on-select="vm.openDetails(pokemon)" on-toggle-favorite="vm.toggleFavorite(pokemon)"></pokemon-card>
+                    </div>
+                </section>
+
+                <section class="section-block mini-section">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Historias legendarias</p>
+                            <h2>Guardianes legendarios</h2>
+                        </div>
+                        <span class="section-note">Poder único</span>
+                    </div>
+                    <div class="pokemon-grid mini-grid" ng-if="!vm.collectionsLoading">
+                        <pokemon-card ng-repeat="pokemon in vm.legendaryPokemon track by pokemon.id" pokemon="pokemon" on-select="vm.openDetails(pokemon)" on-toggle-favorite="vm.toggleFavorite(pokemon)"></pokemon-card>
+                    </div>
+                </section>
+            </div>
+
+            <section class="section-block favorites-section" ng-if="vm.showFavorites">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Tu colección</p>
+                        <h2>Pokémon favoritos</h2>
+                    </div>
+                    <button class="text-button" type="button" ng-click="vm.showFavorites = false">Volver a explorar ↗</button>
+                </div>
+                <div class="empty-state" ng-if="!vm.favoritePokemon.length">Aún no tienes favoritos. Pulsa el corazón de una tarjeta para guardarlos.</div>
+                <div class="pokemon-grid" ng-if="vm.favoritePokemon.length">
+                    <pokemon-card ng-repeat="pokemon in vm.favoritePokemon track by pokemon.id" pokemon="pokemon" on-select="vm.openDetails(pokemon)" on-toggle-favorite="vm.toggleFavorite(pokemon)"></pokemon-card>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div class="modal-backdrop" ng-if="vm.selectedPokemon" ng-click="vm.closeDetails()">
+        <article class="pokemon-modal" role="dialog" aria-modal="true" aria-labelledby="pokemon-title" ng-click="$event.stopPropagation()">
+            <button class="modal-close" type="button" aria-label="Cerrar detalles" ng-click="vm.closeDetails()">×</button>
+            <div class="modal-visual">
+                <span class="pokemon-number">#{{ vm.selectedPokemon.id | numberFixed:3 }}</span>
+                <img ng-src="{{ vm.selectedPokemon.image }}" alt="{{ vm.selectedPokemon.name }}">
+            </div>
+            <div class="modal-content">
+                <p class="eyebrow">Ficha de Pokémon</p>
+                <h2 id="pokemon-title">{{ vm.selectedPokemon.name | titlecase }}</h2>
+                <div class="type-tags">
+                    <span class="type-tag" ng-repeat="type in vm.selectedPokemon.types">{{ type }}</span>
+                </div>
+                <div class="stats-list">
+                    <div class="stat-row" ng-repeat="stat in vm.selectedPokemon.stats">
+                        <span>{{ stat.name }}</span><strong>{{ stat.value }}</strong>
+                        <span class="stat-track"><i ng-style="{ width: stat.value + '%' }"></i></span>
+                    </div>
+                </div>
+                <p class="ability-copy"><strong>Habilidades:</strong> {{ vm.selectedPokemon.abilities.join(', ') }}</p>
+                <button class="favorite-button modal-favorite" type="button" ng-click="vm.toggleFavorite(vm.selectedPokemon)">
+                    {{ vm.isFavorite(vm.selectedPokemon) ? '♥ Quitar de favoritos' : '♡ Guardar en favoritos' }}
+                </button>
+            </div>
+        </article>
+    </div>
+</body>
+</html>
